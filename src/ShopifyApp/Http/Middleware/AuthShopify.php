@@ -20,6 +20,7 @@ use Osiset\ShopifyApp\Util;
 
 /**
  * Response for ensuring an authenticated request.
+ * TODO: Migrate and clean up into VerifyShopify.
  */
 class AuthShopify
 {
