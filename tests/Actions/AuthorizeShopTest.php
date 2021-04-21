@@ -61,7 +61,7 @@ class AuthorizeShopTest extends TestCase
         $shop = factory($this->model)->create();
 
         // Get the current access token
-        $currentToken = $shop->getToken();
+        $currentToken = $shop->getAccessToken();
 
         // Setup API stub
         $this->setApiStub();
@@ -77,7 +77,7 @@ class AuthorizeShopTest extends TestCase
         $shop->refresh();
 
         $this->assertTrue($result->completed);
-        $this->assertNotSame($currentToken->toNative(), $shop->getToken()->toNative());
+        $this->assertNotSame($currentToken->toNative(), $shop->getAccessToken()->toNative());
     }
 
     public function testWithCodeSoftDeletedShop(): void
@@ -88,7 +88,7 @@ class AuthorizeShopTest extends TestCase
         ]);
 
         // Get the current access token
-        $currentToken = $shop->getToken();
+        $currentToken = $shop->getAccessToken();
 
         // Setup API stub
         $this->setApiStub();
@@ -104,6 +104,6 @@ class AuthorizeShopTest extends TestCase
         $shop->refresh();
 
         $this->assertTrue($result->completed);
-        $this->assertNotSame($currentToken->toNative(), $shop->getToken()->toNative());
+        $this->assertNotSame($currentToken->toNative(), $shop->getAccessToken()->toNative());
     }
 }
