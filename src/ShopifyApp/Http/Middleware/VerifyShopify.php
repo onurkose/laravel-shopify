@@ -275,7 +275,7 @@ class VerifyShopify
                 'new_design_language',
                 'timestamp',
                 'session',
-                'shop',
+                'shop'
             ]);
 
             if ($filteredQuery->isNotEmpty()) {
