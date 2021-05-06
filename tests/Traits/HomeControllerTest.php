@@ -2,28 +2,28 @@
 
 namespace Osiset\ShopifyApp\Test\Traits;
 
-use Osiset\ShopifyApp\Services\ShopSession;
+use Illuminate\Auth\AuthManager;
 use Osiset\ShopifyApp\Test\TestCase;
 use Osiset\ShopifyApp\Util;
 
 class HomeControllerTest extends TestCase
 {
     /**
-     * @var \Osiset\ShopifyApp\Services\ShopSession
+     * @var AuthManager
      */
-    protected $shopSession;
+    protected $auth;
 
     public function setUp(): void
     {
         parent::setUp();
 
-        $this->shopSession = $this->app->make(ShopSession::class);
+        $this->auth = $this->app->make(AuthManager::class);
     }
 
     public function testHomeRouteWithAppBridge(): void
     {
         $shop = factory($this->model)->create();
-        $this->shopSession->make($shop->getDomain());
+        $this->auth->login($shop);
 
         $this->call('get', '/', [], ['itp' => true])
             ->assertOk()
@@ -34,7 +34,7 @@ class HomeControllerTest extends TestCase
     public function testHomeRouteWithNoAppBridge(): void
     {
         $shop = factory($this->model)->create();
-        $this->shopSession->make($shop->getDomain());
+        $this->auth->login($shop);
 
         $this->app['config']->set('shopify-app.appbridge_enabled', false);
 

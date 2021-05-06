@@ -2,27 +2,18 @@
 
 namespace Osiset\ShopifyApp\Test\Traits;
 
-use Osiset\ShopifyApp\Services\ShopSession;
 use Osiset\ShopifyApp\Test\Stubs\Api as ApiStub;
 use Osiset\ShopifyApp\Test\TestCase;
 use Osiset\ShopifyApp\Util;
 
 class AuthControllerTest extends TestCase
 {
-    /**
-     * @var \Osiset\ShopifyApp\Services\ShopSession
-     */
-    protected $shopSession;
-
     public function setUp(): void
     {
         parent::setUp();
 
         // Setup API stub
         $this->setApiStub();
-
-        // Shop session helper
-        $this->shopSession = $this->app->make(ShopSession::class);
     }
 
     public function testAuthRedirectsToShopifyWhenNoCode(): void
