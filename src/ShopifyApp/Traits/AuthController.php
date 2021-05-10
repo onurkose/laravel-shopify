@@ -45,7 +45,13 @@ trait AuthController
     public function install(Request $request)
     {
         // Get the shop domain
-        $shopDomain = ShopDomain::fromNative($request->get('shop'));
+        if (getShopifyConfig('turbo_enabled') && $request->user()) {
+            // If the user clicked on any link before load Turbo and receiving the token
+            $shopDomain = $request->user()->getDomain();
+            $request['shop'] = $shopDomain->toNative();
+        } else {
+            $shopDomain = ShopDomain::fromNative($request->get('shop'));
+        }
 
         // Run the action, returns [result object, result status]
         [$result, $status] = $authenticateShop($request);
